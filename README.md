@@ -26,7 +26,7 @@ Description of examples
 
 ## Pretrained models
 
-[Norway Landscape]() | [Norway Cities]() | [CelebA](https://drive.google.com/open?id=1sP8ViF3mxUMN--xpKqonEeW9d8S8pJEo)
+[Norway Landscape]() | [Norway Cities]()
 
 Descripition of pretrained models (input resolution and void size). Examples of usage.
 
