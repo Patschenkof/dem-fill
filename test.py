@@ -24,11 +24,26 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     model = InpaintCAModel()
-    image = cv2.imread(args.image)
+
+    image = cv2.imread(args.image, -1)
+    inim = cv2.imread(args.image, -1)
+    im_min = image.min()
+    im_max = image.max()
+
+    # floating point normalization to prepare data for
+    # 0-255 image input
+    image = cv2.normalize(image, None, 255, 0, cv2.NORM_MINMAX, cv2.CV_32F)
+
+    if len(image.shape) < 3:
+        inim = inim[..., np.newaxis]
+        image = image[..., np.newaxis]
     mask = cv2.imread(args.mask)
-
+    in_mask = cv2.imread(args.mask)
+    mask = mask[:, :, 0]
+    in_mask = in_mask[:, :, 0]
+    if len(mask.shape) < 3:
+        mask = mask[..., np.newaxis]
     assert image.shape == mask.shape
-
     h, w, _ = image.shape
     grid = 8
     image = image[:h//grid*grid, :w//grid*grid, :]
@@ -44,9 +59,11 @@ if __name__ == "__main__":
     with tf.Session(config=sess_config) as sess:
         input_image = tf.constant(input_image, dtype=tf.float32)
         output = model.build_server_graph(input_image)
+
         output = (output + 1.) * 127.5
+
         output = tf.reverse(output, [-1])
-        output = tf.saturate_cast(output, tf.uint8)
+        #output = tf.saturate_cast(output, tf.uint8)
         # load pretrained model
         vars_list = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)
         assign_ops = []
@@ -58,4 +75,12 @@ if __name__ == "__main__":
         sess.run(assign_ops)
         print('Model loaded.')
         result = sess.run(output)
-        cv2.imwrite(args.output, result[0][:, :, ::-1])
+        #result = cv2.normalize(result, None, im_max, im_min, cv2.NORM_MINMAX, cv2.CV_32F)
+        result = result[0][:, :, ::-1]
+        # normalize
+        # TODO: check
+        result = (im_max-im_min)*(result - result.min())/(result.max()-result.min()) + im_min
+        #inim[in_mask > 0] = result[in_mask > 0]
+        cv2.imwrite(args.output, result)
+        #cv2.imwrite(args.output, inim)
+        #cv2.imwrite(args.output, result[0][:, :, ::-1])

@@ -2,23 +2,25 @@
 
 [ArXiv]()
 
-Examples
+---
 
 <p>
 <img src="examples/rex01m-min.png" width="24.5%" />
 <img src="examples/rex01b-min.png" width="24.5%" />
-<img style="float:right;" src="examples/rex03m-min.png" width="24.5%" />
-<img style="float:right;" src="examples/rex03b-min.png" width="24.5%" />
+<img src="examples/rex03m-min.png" width="24.5%" />
+<img src="examples/rex03b-min.png" width="24.5%" />
 </p>
 
 <p>
 <img src="examples/rex09m-min.png" width="24.5%" />
 <img src="examples/rex09o-min.png" width="24.5%" />
-<img style="float:right;" src="examples/rex07m-min.png" width="24.5%" />
-<img style="float:right;" src="examples/rex07o-min.png" width="24.5%" />
+<img src="examples/rex07m-min.png" width="24.5%" />
+<img src="examples/rex07o-min.png" width="24.5%" />
 </p>
 
-Description of examples
+Selection of results of our DEM void filling method.
+
+---
 
 ## Run
 
@@ -42,6 +44,8 @@ Description of examples
 
 [Norway Landscape]() | [Norway Cities]()
 
+Download the model directories and put them under `model_logs/` directory
+
 Description of pretrained models (input resolution and void size). Examples of usage.
 
 ```bash
@@ -57,7 +61,9 @@ CC 4.0 Attribution-NonCommercial International
 
 The software is for educational and academic research purpose only.
 
-# Additional comments
+## Acknowledgements
+
+
 
 ## Citing
 
