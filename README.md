@@ -4,6 +4,7 @@
 
 Examples
 
+<p>
 <img style="width:24%;" src="examples/rex01m-min.png" width="300" />
 <img style="width:24%;" src="examples/rex01b-min.png" width="300" />
 <img style="width:24%;" src="examples/rex03m-min.png" width="300" />
@@ -13,6 +14,7 @@ Examples
 <img style="width:24%;" src="examples/rex09o-min.png" width="300" />
 <img style="width:24%;" src="examples/rex07m-min.png" width="300" />
 <img style="width:24%;" src="examples/rex07o-min.png" width="300" />
+</p>
 
 Description of examples
 
