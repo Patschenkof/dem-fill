@@ -12,10 +12,10 @@ Examples
 </p>
 
 <p>
-<img src="examples/rex09m-min.png" width="24%" />
-<img src="examples/rex09o-min.png" width="24%" />
-<img style="float:right;" src="examples/rex07m-min.png" width="24%" />
-<img style="float:right;" src="examples/rex07o-min.png" width="24%" />
+<img src="examples/rex09m-min.png" width="24.5%" />
+<img src="examples/rex09o-min.png" width="24.5%" />
+<img style="float:right;" src="examples/rex07m-min.png" width="24.5%" />
+<img style="float:right;" src="examples/rex07o-min.png" width="24.5%" />
 </p>
 
 Description of examples
