@@ -5,16 +5,18 @@
 Examples
 
 <p>
-<img src="examples/rex01m-min.png" width="24%"/>
-<img src="examples/rex01b-min.png" width="24%"/>
-<img src="examples/rex03m-min.png" width="24%"/>
-<img src="examples/rex03b-min.png" width="24%"/>
+<img src="examples/rex01m-min.png" width="24%" />
+<img src="examples/rex01b-min.png" width="24%" />
+<img style="float:right;" src="examples/rex03m-min.png" width="24%" />
+<img style="float:right;" src="examples/rex03b-min.png" width="24%" />
 </p>
-   
-<img style="width:24%;" src="examples/rex09m-min.png" />
-<img style="width:24%;" src="examples/rex09o-min.png" />
-<img style="width:24%;" src="examples/rex07m-min.png" />
-<img style="width:24%;" src="examples/rex07o-min.png" />
+
+<p>
+<img src="examples/rex09m-min.png" width="24%" />
+<img src="examples/rex09o-min.png" width="24%" />
+<img style="float:right;" src="examples/rex07m-min.png" width="24%" />
+<img style="float:right;" src="examples/rex07o-min.png" width="24%" />
+</p>
 
 Description of examples
 
