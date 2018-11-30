@@ -5,10 +5,10 @@
 Examples
 
 <p>
-<img src="examples/rex01m-min.png" width="24%" />
-<img src="examples/rex01b-min.png" width="24%" />
-<img style="float:right;" src="examples/rex03m-min.png" width="24%" />
-<img style="float:right;" src="examples/rex03b-min.png" width="24%" />
+<img src="examples/rex01m-min.png" width="25%" />
+<img src="examples/rex01b-min.png" width="25%" />
+<img style="float:right;" src="examples/rex03m-min.png" width="25%" />
+<img style="float:right;" src="examples/rex03b-min.png" width="25%" />
 </p>
 
 <p>
