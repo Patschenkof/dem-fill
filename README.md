@@ -1,6 +1,6 @@
 # Void Filling of Digital Elevation Models with Deep Generative Models
 
-[Our ArXiv submission]()
+[ArXiv]()
 
 Examples
 
