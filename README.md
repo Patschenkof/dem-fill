@@ -4,6 +4,16 @@
 
 Examples
 
+<img style="width:24%;" src="examples/rex01m-min.png" width="300" />
+<img style="width:24%;" src="examples/rex01b-min.png" width="300" />
+<img style="width:24%;" src="examples/rex03m-min.png" width="300" />
+<img style="width:24%;" src="examples/rex03b-min.png" width="300" />
+
+<img style="width:24%;" src="examples/rex09m-min.png" width="300" />
+<img style="width:24%;" src="examples/rex09o-min.png" width="300" />
+<img style="width:24%;" src="examples/rex07m-min.png" width="300" />
+<img style="width:24%;" src="examples/rex07o-min.png" width="300" />
+
 Description of examples
 
 ## Run
@@ -13,7 +23,7 @@ Description of examples
     * Install [tensorflow](https://www.tensorflow.org/install/) (tested on Release 1.3.0, 1.4.0, 1.5.0, 1.6.0, 1.7.0).
     * Install tensorflow toolkit [neuralgym](https://github.com/konstantg/neuralgym) (run `pip install git+https://github.com/konstantg/neuralgym`).
 1. Training:
-    * Prepare training images filelist and shuffle it ([example](https://github.com/JiahuiYu/generative_inpainting/issues/15)). 
+    * Prepare training images filelist and shuffle it ([example](https://github.com/JiahuiYu/generative_inpainting/issues/15)).
     * Modify [inpaint.yml](/inpaint.yml) to set DATA_FLIST, LOG_DIR, IMG_SHAPES and other parameters.
     * Run `python train.py`.
 2. Resume training:
@@ -28,7 +38,7 @@ Description of examples
 
 [Norway Landscape]() | [Norway Cities]()
 
-Descripition of pretrained models (input resolution and void size). Examples of usage.
+Description of pretrained models (input resolution and void size). Examples of usage.
 
 ```bash
 # Norway Landscape
