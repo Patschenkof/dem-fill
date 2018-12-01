@@ -67,7 +67,7 @@ The software is for educational and academic research purpose only.
 
 ## Acknowledgements
 
-We adapted the GitHub repository [generative_inpainting](https://github.com/JiahuiYu/generative_inpainting) to the setting of Digital Elevation Models. The open source C++ library GoTools was used for generating the LR B-spline data. Data provided courtesy Norwegian Mapping Authorities (www.hoydedata.no), copyright Kartverket (CC BY 4.0). This project has received funding from the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement No 675789. This projected was also supported by an IKTPLUSS grant, project number 270922, from the Research Council of Norway.
+We adapted the GitHub repository [generative_inpainting](https://github.com/JiahuiYu/generative_inpainting) to the setting of Digital Elevation Models. The open source C++ library [GoTools](https://github.com/SINTEF-Geometry/GoTools) was used for generating the LR B-spline data. Data provided courtesy Norwegian Mapping Authorities (www.hoydedata.no), copyright Kartverket (CC BY 4.0). This project has received funding from the European Union’s Horizon 2020 research and innovation programme under the Marie Skłodowska-Curie grant agreement No 675789. This projected was also supported by an IKTPLUSS grant, project number 270922, from the Research Council of Norway.
 
 ## Citing
 
