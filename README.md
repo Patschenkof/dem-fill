@@ -9,29 +9,53 @@ This GitHub repository implements and evaluates the method described in the pape
 ---
 
 <p>
-<img src="examples/rex01m-min.png" width="24.5%" />
-<img src="examples/rex01b-min.png" width="24.5%" />
-<img src="examples/rex03m-min.png" width="24.5%" />
-<img src="examples/rex03b-min.png" width="24.5%" />
+<img src="https://user-images.githubusercontent.com/26650959/49333780-24d37380-f5c5-11e8-8dc9-104ac7373874.png" width="24.5%" />
+<img src="https://user-images.githubusercontent.com/26650959/49333779-24d37380-f5c5-11e8-88de-b1157b59537c.png" width="24.5%" />
+<img src="https://user-images.githubusercontent.com/26650959/49333784-256c0a00-f5c5-11e8-8868-953bc154b182.png" width="24.5%" />
+<img src="https://user-images.githubusercontent.com/26650959/49333783-256c0a00-f5c5-11e8-9243-a454924bb0af.png" width="24.5%" />
 </p>
 
 <p>
-<img src="examples/rex09m-min.png" width="24.5%" />
-<img src="examples/rex09o-min.png" width="24.5%" />
-<img src="examples/rex07m-min.png" width="24.5%" />
-<img src="examples/rex07o-min.png" width="24.5%" />
+<img src="https://user-images.githubusercontent.com/26650959/49333787-269d3700-f5c5-11e8-8586-fcd9bfdc0768.png" width="24.5%" />
+<img src="https://user-images.githubusercontent.com/26650959/49333788-269d3700-f5c5-11e8-8d6c-6702063abcdf.png" width="24.5%" />
+<img src="https://user-images.githubusercontent.com/26650959/49333785-2604a080-f5c5-11e8-8043-38df141459dc.png" width="24.5%" />
+<img src="https://user-images.githubusercontent.com/26650959/49333786-2604a080-f5c5-11e8-9fab-2d5f74cca6c8.png" width="24.5%" />
 </p>
 
 Selection of results of the DeepDEMFill void filling method for Digital Elevation Models.
 
 ---
 
-## Run
+## Setup
+
+* Install python3.
+* Install [tensorflow](https://www.tensorflow.org/install/) (tested on Release 1.3.0, 1.4.0, 1.5.0, 1.6.0, 1.7.0).
+* Install tensorflow toolkit [neuralgym](https://github.com/konstantg/neuralgym) (run `pip install git+https://github.com/konstantg/neuralgym`).
+* Clone the repository `git clone https://github.com/konstantg/dem-fill.git`
+
+## Testing pretrained models
+
+[Norway Landscape](https://drive.google.com/open?id=1v30pCcxXxsZzCxjbiXkSM32miZg0GGhL) | [Norway Cities](https://drive.google.com/open?id=1MUMQamoflOidv5kvphpCVajcIgfjw7Nb)
+
+Download the desired model and extract the contents of the zip directory to the `model_logs/` directory.
+
+Model `norway_land` was trained on 10m-resolution DEMs
+of Western and Eastern Norway while `norway_cities` was trained on 2m-resolution DEMs of the three largest cities in Norway, namely Oslo, Trondheim, and Bergen. The input in both cases are DEMs of size 256x256. The size of the void ranges from 64x64 up to 128x128 (not necessarily rectangular) and is randomly placed over the DEM.
+
+To run:
+
+```bash
+# Norway Landscape
+python test.py --image data/land01.tif --mask data/land01mask.png --output data/land01out.tif --checkpoint_dir model_logs/norway_land/
+
+# Norway Cities
+python test.py --image data/city01.tif --mask data/city01mask.png --output data/city01out.tif --checkpoint_dir model_logs/norway_cities/
+```
+
+## Training
 
 0. Requirements:
-    * Install python3.
-    * Install [tensorflow](https://www.tensorflow.org/install/) (tested on Release 1.3.0, 1.4.0, 1.5.0, 1.6.0, 1.7.0).
-    * Install tensorflow toolkit [neuralgym](https://github.com/konstantg/neuralgym) (run `pip install git+https://github.com/konstantg/neuralgym`).
+
 1. Training:
     * Prepare training images filelist and shuffle it ([example](https://github.com/JiahuiYu/generative_inpainting/issues/15)).
     * Modify [inpaint.yml](/inpaint.yml) to set DATA_FLIST, LOG_DIR, IMG_SHAPES and other parameters.
@@ -46,18 +70,6 @@ Selection of results of the DeepDEMFill void filling method for Digital Elevatio
 
 ## Pretrained models
 
-[Norway Landscape](https://drive.google.com/open?id=1v30pCcxXxsZzCxjbiXkSM32miZg0GGhL) | [Norway Cities](https://drive.google.com/open?id=1MUMQamoflOidv5kvphpCVajcIgfjw7Nb)
-
-Download the model directories and put them under `model_logs/` directory
-
-Description of pretrained models (input resolution and void size). Examples of usage.
-
-```bash
-# Norway Landscape
-python test.py --image input.tif --mask mask.png --output output.tif (or png) --checkpoint_dir model_logs/checkpoint/
-# Norway Cities
-python test.py --image input.tif --mask mask.png --output output.tif (or png) --checkpoint_dir model_logs/checkpoint/
-```
 
 ## License
 
