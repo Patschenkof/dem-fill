@@ -46,7 +46,7 @@ Selection of results of the DeepDEMFill void filling method for Digital Elevatio
 
 ## Pretrained models
 
-[Norway Landscape]() | [Norway Cities]()
+[Norway Landscape](https://drive.google.com/open?id=1cxV9nQBQm410BPxS9NjecU5dHZeqZcDX) | [Norway Cities](https://drive.google.com/open?id=1iSdQ28W4GDuBUweMXGtYgNu7Z_XQ24eN)
 
 Download the model directories and put them under `model_logs/` directory
 
