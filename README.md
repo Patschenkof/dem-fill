@@ -55,7 +55,9 @@ python test.py --image data/city01.tif --mask data/city01mask.png --output data/
 
 __Note:__ If you do not have a TIF viewer, [IrfanView](https://www.irfanview.com/) is recommended.
 
+## Results
 
+We compared our results with two other void-filling methods, namely inverse distance weighting (solution provided by `gdal_fillnodata.py`) and LR B-spline interpolation. The 50 random urban and 50 random rural DEMs, along with the randomly generated masks and the void-filling results, used in the comparison can be downloaded [here](https://drive.google.com/open?id=12GaxRnzoJUJNKdXn-yIeWl1mwpjaz8DO).
 
 ## Training
 
