@@ -78,7 +78,6 @@ if __name__ == "__main__":
         #result = cv2.normalize(result, None, im_max, im_min, cv2.NORM_MINMAX, cv2.CV_32F)
         result = result[0][:, :, ::-1]
         # normalize
-        # TODO: check
         result = (im_max-im_min)*(result - result.min())/(result.max()-result.min()) + im_min
         #inim[in_mask > 0] = result[in_mask > 0]
         cv2.imwrite(args.output, result)
