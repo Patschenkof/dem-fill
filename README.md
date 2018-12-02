@@ -53,8 +53,6 @@ python test.py --image data/city01.tif --mask data/city01mask.png --output data/
 
 ## Training
 
-0. Requirements:
-
 1. Training:
     * Prepare training images filelist and shuffle it ([example](https://github.com/JiahuiYu/generative_inpainting/issues/15)).
     * Modify [inpaint.yml](/inpaint.yml) to set DATA_FLIST, LOG_DIR, IMG_SHAPES and other parameters.
