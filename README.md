@@ -33,11 +33,13 @@ Selection of results of the DeepDEMFill void filling method for Digital Elevatio
 * Install tensorflow toolkit [neuralgym](https://github.com/konstantg/neuralgym) (run `pip install git+https://github.com/konstantg/neuralgym`).
 * Clone the repository `git clone https://github.com/konstantg/dem-fill.git`
 
+Other dependencies: [`opencv-python`](https://pypi.org/project/opencv-python/), [`PyYAML`](https://pypi.org/project/PyYAML/)
+
 ## Testing pretrained models
 
-[Norway Landscape](https://drive.google.com/open?id=1v30pCcxXxsZzCxjbiXkSM32miZg0GGhL) | [Norway Cities](https://drive.google.com/open?id=1MUMQamoflOidv5kvphpCVajcIgfjw7Nb)
+[Norway Landscape](https://drive.google.com/open?id=1OaQ0PNqaLQ5-TVerRzQl3OkIXdf9R4US) | [Norway Cities](https://drive.google.com/open?id=1Y_noNEPh6Uzm1OFzGWT3Tsey83nYsgCl)
 
-Download the desired model and extract the contents of the zip directory to the `model_logs/` directory.
+Download the desired model(s), create a `model_logs/` directory in the `dem-fill/` directory and extract the contents of the zip there. See run examples below for proposed directory structure.
 
 Model `norway_land` was trained on 10m-resolution DEMs of Western and Eastern Norway while `norway_cities` was trained on 2m-resolution DEMs of the three largest cities in Norway, namely Oslo, Trondheim, and Bergen. The input in both cases are DEMs of size 256x256. The size of the void ranges from 64x64 up to 128x128 (not necessarily rectangular) and is randomly placed over the DEM.
 
@@ -51,19 +53,23 @@ python test.py --image data/land01.tif --mask data/land01mask.png --output data/
 python test.py --image data/city01.tif --mask data/city01mask.png --output data/city01out.tif --checkpoint_dir model_logs/norway_cities/
 ```
 
+__Note:__ If you do not have a TIF viewer, [IrfanView](https://www.irfanview.com/) is recommended.
+
+
+
 ## Training
 
+For training on your DEMs, please modify accordingly `data_from_fnames.py` from the `neuralgym` package to accept your files. For example, it was more efficient to use an [`h5py`](https://www.h5py.org/) file to store and sample the Norway landscape dataset, while for the Norway cities dataset we preload the Oslo, Bergen and Trondheim DEMs to memory for sampling. Please refer to the `data_from_fnames.py` file for these examples.
+
 1. Training:
-    * Prepare training images filelist and shuffle it ([example](https://github.com/JiahuiYu/generative_inpainting/issues/15)).
-    * Modify [inpaint.yml](/inpaint.yml) to set DATA_FLIST, LOG_DIR, IMG_SHAPES and other parameters.
+    * Modify the data `data_from_fnames.py` file accordingly.
+    * Modify [inpaint.yml](/inpaint.yml) to set LOG_DIR, IMG_SHAPES and other parameters.
     * Run `python train.py`.
 2. Resume training:
-    * Modify MODEL_RESTORE flag in [inpaint.yml](/inpaint.yml). E.g., MODEL_RESTORE: 20180115220926508503_places2_model.
+    * Modify MODEL_RESTORE flag in [inpaint.yml](/inpaint.yml). E.g., MODEL_RESTORE: 20181119115621405562_norway_cities.
     * Run `python train.py`.
 3. Testing:
-    * Run `python test.py --image examples/input.png --mask examples/mask.png --output examples/output.png --checkpoint model_logs/your_model_dir`.
-4. Still have questions?
-    * If you still have questions (e.g.: What does filelist looks like? How to use multi-gpus? How to do batch testing?), please first search over closed issues. If the problem is not solved, please open a new issue.
+    * Run `python test.py --image examples/input.tif --mask examples/mask.png --output examples/output.tif --checkpoint model_logs/your_model_dir`.
 
 
 ## License

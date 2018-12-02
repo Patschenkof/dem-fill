@@ -28,6 +28,17 @@ GRADIENT_CLIP: False
 GRADIENT_CLIP_VALUE: 0.1
 VAL_PSTEPS: 10000000
 
+# data
+DATA_FLIST:
+  # Norway cities
+  cities: [
+    'data/train_shuffled.flist',
+    'data/celeba_hq/validation_static_view.flist'
+  ]
+  # Norway landscape
+  land: [
+    'data/celeba/train_shuffled.flist',
+    'data/celeba/validation_static_view.flist'
 
 STATIC_VIEW_SIZE: 30
 IMG_SHAPES: [256, 256, 1]
