@@ -59,7 +59,7 @@ __Note:__ If you do not have a TIF viewer, [IrfanView](https://www.irfanview.com
 
 ## Training
 
-For training on your DEMs, please modify accordingly `data_from_fnames.py` from the `neuralgym` package to accept your files. For example, it was more efficient to use an [`h5py`](https://www.h5py.org/) file to store and sample the Norway landscape dataset, while for the Norway cities dataset we preload the Oslo, Bergen and Trondheim DEMs to memory for sampling. Please refer to the `data_from_fnames.py` file for these examples.
+For training on your DEMs, please modify accordingly `data_from_fnames.py` from the installed `neuralgym` package to accept your files. For example, it was more efficient to use an [`h5py`](https://www.h5py.org/) file to store and sample the Norway landscape dataset, while for the Norway cities dataset we preload the Oslo, Bergen and Trondheim DEMs to memory for sampling. Please refer to the `data_from_fnames.py` file for these examples.
 
 1. Training:
     * Modify the data `data_from_fnames.py` file accordingly.
