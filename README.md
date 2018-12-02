@@ -39,8 +39,7 @@ Selection of results of the DeepDEMFill void filling method for Digital Elevatio
 
 Download the desired model and extract the contents of the zip directory to the `model_logs/` directory.
 
-Model `norway_land` was trained on 10m-resolution DEMs
-of Western and Eastern Norway while `norway_cities` was trained on 2m-resolution DEMs of the three largest cities in Norway, namely Oslo, Trondheim, and Bergen. The input in both cases are DEMs of size 256x256. The size of the void ranges from 64x64 up to 128x128 (not necessarily rectangular) and is randomly placed over the DEM.
+Model `norway_land` was trained on 10m-resolution DEMs of Western and Eastern Norway while `norway_cities` was trained on 2m-resolution DEMs of the three largest cities in Norway, namely Oslo, Trondheim, and Bergen. The input in both cases are DEMs of size 256x256. The size of the void ranges from 64x64 up to 128x128 (not necessarily rectangular) and is randomly placed over the DEM.
 
 To run:
 
@@ -67,8 +66,6 @@ python test.py --image data/city01.tif --mask data/city01mask.png --output data/
     * Run `python test.py --image examples/input.png --mask examples/mask.png --output examples/output.png --checkpoint model_logs/your_model_dir`.
 4. Still have questions?
     * If you still have questions (e.g.: What does filelist looks like? How to use multi-gpus? How to do batch testing?), please first search over closed issues. If the problem is not solved, please open a new issue.
-
-## Pretrained models
 
 
 ## License

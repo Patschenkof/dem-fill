@@ -1,9 +1,9 @@
 # parameters
-DATASET: 'city'  # 'tmnist', 'dtd', 'places2', 'celeba', 'imagenet', 'cityscapes'
+DATASET: 'cities'  # 'cities', 'land'
 RANDOM_CROP: False
 VAL: False
-LOG_DIR: norway
-MODEL_RESTORE: ''  # '20180115220926508503_jyugpu0_places2_NORMAL_wgan_gp_full_model'
+LOG_DIR: cities
+MODEL_RESTORE: ''  # 'norway_cities'
 
 GAN: 'wgan_gp'  # 'dcgan', 'lsgan', 'wgan_gp', 'one_wgan_gp'
 PRETRAIN_COARSE_NETWORK: False
@@ -28,32 +28,6 @@ GRADIENT_CLIP: False
 GRADIENT_CLIP_VALUE: 0.1
 VAL_PSTEPS: 10000000
 
-# data
-DATA_FLIST:
-  # https://github.com/JiahuiYu/progressive_growing_of_gans_tf
-  celebahq: [
-    'data/celeba_hq/train_shuffled.flist',
-    'data/celeba_hq/validation_static_view.flist'
-  ]
-  # http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html, please to use RANDOM_CROP: True
-  celeba: [
-    'data/celeba/train_shuffled.flist',
-    'data/celeba/validation_static_view.flist'
-  ]
-  # http://places2.csail.mit.edu/, please download the high-resolution dataset and use RANDOM_CROP: True
-  places2: [
-    'data/places2/train_shuffled.flist',
-    'data/places2/validation_static_view.flist'
-  ]
-  # http://www.image-net.org/, please use RANDOM_CROP: True
-  imagenet: [
-    'data/imagenet/train_shuffled.flist',
-    'data/imagenet/validation_static_view.flist',
-  ]
-  city: [
-    'data/train.flist',
-    'data/validate.flist',
-  ]
 
 STATIC_VIEW_SIZE: 30
 IMG_SHAPES: [256, 256, 1]
