@@ -39,7 +39,7 @@ Other dependencies: [`opencv-python`](https://pypi.org/project/opencv-python/), 
 
 [Norway Landscape](https://drive.google.com/open?id=1OaQ0PNqaLQ5-TVerRzQl3OkIXdf9R4US) | [Norway Cities](https://drive.google.com/open?id=1Y_noNEPh6Uzm1OFzGWT3Tsey83nYsgCl)
 
-Download the desired model(s), create a `model_logs/` directory in the `dem-fill/` directory and extract the contents of the zip there. See run examples below for proposed directory structure.
+Download the desired model(s), create a `model_logs/` directory in the `dem-fill/` directory and extract the zip folder there. Specifically, to run the examples below, the extracted files (`checkpoint` etc.) should be in either the `model_logs/norway_land/` or the `model_logs/norway_cities/` directory respectively.
 
 Model `norway_land` was trained on 10m-resolution DEMs of Western and Eastern Norway while `norway_cities` was trained on 2m-resolution DEMs of the three largest cities in Norway, namely Oslo, Trondheim, and Bergen. The input in both cases are DEMs of size 256x256. The size of the void ranges from 64x64 up to 128x128 (not necessarily rectangular) and is randomly placed over the DEM.
 
