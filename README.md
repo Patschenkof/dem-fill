@@ -53,7 +53,7 @@ python test.py --image data/land01.tif --mask data/land01mask.png --output data/
 python test.py --image data/city01.tif --mask data/city01mask.png --output data/city01out.tif --checkpoint_dir model_logs/norway_cities/
 ```
 
-__Note:__ If you do not have a TIF viewer, [IrfanView](https://www.irfanview.com/) is recommended.
+__Note:__ If you do not have a TIF viewer, [IrfanView](https://www.irfanview.com/) is recommended for Windows.
 
 ## Results
 
