@@ -2,7 +2,7 @@
 
 This GitHub repository implements and evaluates the method described in the paper [1], which is an adaptation to the context of Digital Elevation Models (DEMs) from the method DeepFill described in [2]. In addition pre-trained models are provided, as well as the DEMs used for the evaluation of the method.
 
-[1] K. Gavriil, O.J.D. Barrowclough, G. Muntingh, _Void Filling of Digital Elevation Models with Deep Generative Models_, available on the [ArXiv]().
+[1] K. Gavriil, O.J.D. Barrowclough, G. Muntingh, _Void Filling of Digital Elevation Models with Deep Generative Models_, available on the [ArXiv](https://arxiv.org/abs/1811.12693).
 
 [2] J. Yu, Z. Lin, J. Yang, X. Shen, X. Lu, and T. S. Huang, _Generative image inpainting with contextual attention_, in The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018.
 
@@ -86,8 +86,11 @@ We adapted the GitHub repository [generative_inpainting](https://github.com/Jiah
 
 ## Citing
 
-Arxiv
-
 ```
-how to cite
+@article{1811.12693,
+author = {Konstantinos Gavriil and Georg Muntingh and Oliver J. D. Barrowclough},
+title = {Void Filling of Digital Elevation Models with Deep Generative Models},
+year = {2018},
+eprint = {arXiv:1811.12693},
+}
 ```
