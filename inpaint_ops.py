@@ -179,7 +179,7 @@ def resize_mask_like(mask, x):
     """
     mask_resize = resize(
         mask, to_shape=x.get_shape().as_list()[1:3],
-        func=tf.image.resize_nearest_neighbor)
+        func=tf.compat.v1.image.resize_nearest_neighbor)
     return mask_resize
 
 
