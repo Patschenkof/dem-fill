@@ -3,7 +3,9 @@ import logging
 import cv2
 import numpy as np
 import tensorflow as tf
-from tensorflow.contrib.framework.python.ops import add_arg_scope
+from tf_slim import add_arg_scope
+
+# tensorflow.contrib.framework.python.ops
 
 from neuralgym.ops.layers import resize
 from neuralgym.ops.layers import *
