@@ -270,7 +270,7 @@ def contextual_attention(f, b, mask=None, ksize=3, stride=1, rate=1,
     m = tf.reshape(m, [1, -1, ksize, ksize, 1])
     m = tf.transpose(m, [0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
     m = m[0]
-    mm = tf.cast(tf.equal(tf.reduce_mean(m, axis=[0,1,2], keep_dims=True), 0.), tf.float32)
+    mm = tf.cast(tf.equal(tf.reduce_mean(m, axis=[0,1,2], keepdims=True), 0.), tf.float32)
     w_groups = tf.split(w, int_bs[0], axis=0)
     raw_w_groups = tf.split(raw_w, int_bs[0], axis=0)
     y = []
