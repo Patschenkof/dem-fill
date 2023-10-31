@@ -242,7 +242,7 @@ def contextual_attention(f, b, mask=None, ksize=3, stride=1, rate=1,
     raw_int_bs = b.get_shape().as_list()
     # extract patches from background with stride and rate
     kernel = 2*rate
-    raw_w = tf.extract_image_patches(
+    raw_w = tf.compat.v1.extract_image_patches(
         b, [1,kernel,kernel,1], [1,rate*stride,rate*stride,1], [1,1,1,1], padding='SAME')
     raw_w = tf.reshape(raw_w, [raw_int_bs[0], -1, kernel, kernel, raw_int_bs[3]])
     raw_w = tf.transpose(raw_w, [0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
@@ -258,14 +258,14 @@ def contextual_attention(f, b, mask=None, ksize=3, stride=1, rate=1,
     # from t(H*W*C) to w(b*k*k*c*h*w)
     bs = tf.shape(b)
     int_bs = b.get_shape().as_list()
-    w = tf.extract_image_patches(
+    w = tf.compat.v1.extract_image_patches(
         b, [1,ksize,ksize,1], [1,stride,stride,1], [1,1,1,1], padding='SAME')
     w = tf.reshape(w, [int_fs[0], -1, ksize, ksize, int_fs[3]])
     w = tf.transpose(w, [0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
     # process mask
     if mask is None:
         mask = tf.zeros([1, bs[1], bs[2], 1])
-    m = tf.extract_image_patches(
+    m = tf.compat.v1.extract_image_patches(
         mask, [1,ksize,ksize,1], [1,stride,stride,1], [1,1,1,1], padding='SAME')
     m = tf.reshape(m, [1, -1, ksize, ksize, 1])
     m = tf.transpose(m, [0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
