@@ -142,7 +142,7 @@ def bbox2mask(bbox, config, name='mask'):
         img_shape = config.IMG_SHAPES
         height = img_shape[0]
         width = img_shape[1]
-        mask = tf.py_func(
+        mask = tf.compat.v1.py_func(
             npmask,
             [bbox, height, width,
              config.MAX_DELTA_HEIGHT, config.MAX_DELTA_WIDTH],
@@ -461,7 +461,7 @@ def flow_to_image_tf(flow, name='flow_to_image'):
     """Tensorflow ops for computing flow to image.
     """
     with tf.compat.v1.variable_scope(name), tf.device('/cpu:0'):
-        img = tf.py_func(flow_to_image, [flow], tf.float32, stateful=False)
+        img = tf.compat.v1.py_func(flow_to_image, [flow], tf.float32, stateful=False)
         img.set_shape(flow.get_shape().as_list()[0:-1]+[3])
         img = img / 127.5 - 1.
         return img
@@ -489,7 +489,7 @@ def highlight_flow_tf(flow, name='flow_to_image'):
     """Tensorflow ops for highlight flow.
     """
     with tf.compat.v1.variable_scope(name), tf.device('/cpu:0'):
-        img = tf.py_func(highlight_flow, [flow], tf.float32, stateful=False)
+        img = tf.compat.v1.py_func(highlight_flow, [flow], tf.float32, stateful=False)
         img.set_shape(flow.get_shape().as_list()[0:-1]+[3])
         img = img / 127.5 - 1.
         return img
