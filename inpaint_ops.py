@@ -64,7 +64,7 @@ def gen_deconv(x, cnum, name='upsample', padding='SAME', training=True):
         tf.Tensor: output
 
     """
-    with tf.variable_scope(name):
+    with tf.compat.v1.variable_scope(name):
         x = resize(x, func=tf.image.resize_nearest_neighbor)
         x = gen_conv(
             x, cnum, 3, 1, name=name+'_conv', padding=padding,
