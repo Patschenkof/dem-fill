@@ -65,7 +65,7 @@ if __name__ == "__main__":
         output = tf.reverse(output, [-1])
         #output = tf.saturate_cast(output, tf.uint8)
         # load pretrained model
-        vars_list = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)
+        vars_list = tf.compat.v1.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)
         assign_ops = []
         for var in vars_list:
             vname = var.name
