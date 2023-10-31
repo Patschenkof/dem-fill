@@ -54,7 +54,7 @@ if __name__ == "__main__":
     mask = np.expand_dims(mask, 0)
     input_image = np.concatenate([image, mask], axis=2)
 
-    sess_config = tf.ConfigProto()
+    sess_config = tf.compat.v1.ConfigProto()
     sess_config.gpu_options.allow_growth = True
     with tf.Session(config=sess_config) as sess:
         input_image = tf.constant(input_image, dtype=tf.float32)
