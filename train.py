@@ -58,15 +58,15 @@ if __name__ == "__main__":
             static_inpainted_images = model.build_static_infer_graph(
                 static_images, config, name='static_view/%d' % i)
     # training settings
-    lr = tf.get_variable(
+    lr = tf.compat.v1.get_variable(
         'lr', shape=[], trainable=False,
-        initializer=tf.constant_initializer(1e-4))
-    d_optimizer = tf.train.AdamOptimizer(lr, beta1=0.5, beta2=0.9)
+        initializer=tf.compat.v1.constant_initializer(1e-4))
+    d_optimizer = tf.compat.v1.train.AdamOptimizer(lr, beta1=0.5, beta2=0.9)
     g_optimizer = d_optimizer
     # gradient processor
     if config.GRADIENT_CLIP:
         gradient_processor = lambda grad_var: (
-            tf.clip_by_average_norm(grad_var[0], config.GRADIENT_CLIP_VALUE),
+            tf.compat.v1.clip_by_average_norm(grad_var[0], config.GRADIENT_CLIP_VALUE),
             grad_var[1])
     else:
         gradient_processor = None
@@ -106,7 +106,7 @@ if __name__ == "__main__":
         ng.callbacks.WeightsViewer(),
         ng.callbacks.ModelRestorer(trainer.context['saver'], dump_prefix='model_logs/'+config.MODEL_RESTORE+'/snap', optimistic=True),
         ng.callbacks.ModelSaver(config.TRAIN_SPE, trainer.context['saver'], log_prefix+'/snap'),
-        ng.callbacks.SummaryWriter((config.VAL_PSTEPS//1), trainer.context['summary_writer'], tf.summary.merge_all()),
+        ng.callbacks.SummaryWriter((config.VAL_PSTEPS//1), trainer.context['summary_writer'], tf.compat.v1.summary.merge_all()),
     ])
     # launch training
     trainer.train()

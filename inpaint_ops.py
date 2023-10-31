@@ -40,7 +40,7 @@ def gen_conv(x, cnum, ksize, stride=1, rate=1, name='conv',
     assert padding in ['SYMMETRIC', 'SAME', 'REFELECT']
     if padding == 'SYMMETRIC' or padding == 'REFELECT':
         p = int(rate*(ksize-1)/2)
-        x = tf.pad(x, [[0,0], [p, p], [p, p], [0,0]], mode=padding)
+        x = tf.pad(tensor=x, paddings=[[0,0], [p, p], [p, p], [0,0]], mode=padding)
         padding = 'VALID'
     x = tf.compat.v1.layers.conv2d(
         x, cnum, ksize, stride, dilation_rate=rate,
@@ -89,7 +89,7 @@ def dis_conv(x, cnum, ksize=5, stride=2, name='conv', training=True):
         tf.Tensor: output
 
     """
-    x = tf.layers.conv2d(x, cnum, ksize, stride, 'SAME', name=name)
+    x = tf.compat.v1.layers.conv2d(x, cnum, ksize, stride, 'SAME', name=name)
     x = tf.nn.leaky_relu(x)
     return x
 
@@ -110,9 +110,9 @@ def random_bbox(config):
     img_width = img_shape[1]
     maxt = img_height - config.VERTICAL_MARGIN - config.HEIGHT
     maxl = img_width - config.HORIZONTAL_MARGIN - config.WIDTH
-    t = tf.random_uniform(
+    t = tf.random.uniform(
         [], minval=config.VERTICAL_MARGIN, maxval=maxt, dtype=tf.int32)
-    l = tf.random_uniform(
+    l = tf.random.uniform(
         [], minval=config.HORIZONTAL_MARGIN, maxval=maxl, dtype=tf.int32)
     h = tf.constant(config.HEIGHT)
     w = tf.constant(config.WIDTH)
@@ -237,7 +237,7 @@ def contextual_attention(f, b, mask=None, ksize=3, stride=1, rate=1,
 
     """
     # get shapes
-    raw_fs = tf.shape(f)
+    raw_fs = tf.shape(input=f)
     raw_int_fs = f.get_shape().as_list()
     raw_int_bs = b.get_shape().as_list()
     # extract patches from background with stride and rate
@@ -245,32 +245,32 @@ def contextual_attention(f, b, mask=None, ksize=3, stride=1, rate=1,
     raw_w = tf.compat.v1.extract_image_patches(
         b, [1,kernel,kernel,1], [1,rate*stride,rate*stride,1], [1,1,1,1], padding='SAME')
     raw_w = tf.reshape(raw_w, [raw_int_bs[0], -1, kernel, kernel, raw_int_bs[3]])
-    raw_w = tf.transpose(raw_w, [0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
+    raw_w = tf.transpose(a=raw_w, perm=[0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
     # downscaling foreground option: downscaling both foreground and
     # background for matching and use original background for reconstruction.
     f = resize(f, scale=1./rate, func=tf.compat.v1.image.resize_nearest_neighbor)
     b = resize(b, to_shape=[int(raw_int_bs[1]/rate), int(raw_int_bs[2]/rate)], func=tf.compat.v1.image.resize_nearest_neighbor)  # https://github.com/tensorflow/tensorflow/issues/11651
     if mask is not None:
         mask = resize(mask, scale=1./rate, func=tf.compat.v1.image.resize_nearest_neighbor)
-    fs = tf.shape(f)
+    fs = tf.shape(input=f)
     int_fs = f.get_shape().as_list()
     f_groups = tf.split(f, int_fs[0], axis=0)
     # from t(H*W*C) to w(b*k*k*c*h*w)
-    bs = tf.shape(b)
+    bs = tf.shape(input=b)
     int_bs = b.get_shape().as_list()
     w = tf.compat.v1.extract_image_patches(
         b, [1,ksize,ksize,1], [1,stride,stride,1], [1,1,1,1], padding='SAME')
     w = tf.reshape(w, [int_fs[0], -1, ksize, ksize, int_fs[3]])
-    w = tf.transpose(w, [0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
+    w = tf.transpose(a=w, perm=[0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
     # process mask
     if mask is None:
         mask = tf.zeros([1, bs[1], bs[2], 1])
     m = tf.compat.v1.extract_image_patches(
         mask, [1,ksize,ksize,1], [1,stride,stride,1], [1,1,1,1], padding='SAME')
     m = tf.reshape(m, [1, -1, ksize, ksize, 1])
-    m = tf.transpose(m, [0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
+    m = tf.transpose(a=m, perm=[0, 2, 3, 4, 1])  # transpose to b*k*k*c*hw
     m = m[0]
-    mm = tf.cast(tf.equal(tf.reduce_mean(m, axis=[0,1,2], keepdims=True), 0.), tf.float32)
+    mm = tf.cast(tf.equal(tf.reduce_mean(input_tensor=m, axis=[0,1,2], keepdims=True), 0.), tf.float32)
     w_groups = tf.split(w, int_bs[0], axis=0)
     raw_w_groups = tf.split(raw_w, int_bs[0], axis=0)
     y = []
@@ -281,19 +281,19 @@ def contextual_attention(f, b, mask=None, ksize=3, stride=1, rate=1,
     for xi, wi, raw_wi in zip(f_groups, w_groups, raw_w_groups):
         # conv for compare
         wi = wi[0]
-        wi_normed = wi / tf.maximum(tf.sqrt(tf.reduce_sum(tf.square(wi), axis=[0,1,2])), 1e-4)
-        yi = tf.nn.conv2d(xi, wi_normed, strides=[1,1,1,1], padding="SAME")
+        wi_normed = wi / tf.maximum(tf.sqrt(tf.reduce_sum(input_tensor=tf.square(wi), axis=[0,1,2])), 1e-4)
+        yi = tf.nn.conv2d(input=xi, filters=wi_normed, strides=[1,1,1,1], padding="SAME")
 
         # conv implementation for fuse scores to encourage large patches
         if fuse:
             yi = tf.reshape(yi, [1, fs[1]*fs[2], bs[1]*bs[2], 1])
-            yi = tf.nn.conv2d(yi, fuse_weight, strides=[1,1,1,1], padding='SAME')
+            yi = tf.nn.conv2d(input=yi, filters=fuse_weight, strides=[1,1,1,1], padding='SAME')
             yi = tf.reshape(yi, [1, fs[1], fs[2], bs[1], bs[2]])
-            yi = tf.transpose(yi, [0, 2, 1, 4, 3])
+            yi = tf.transpose(a=yi, perm=[0, 2, 1, 4, 3])
             yi = tf.reshape(yi, [1, fs[1]*fs[2], bs[1]*bs[2], 1])
-            yi = tf.nn.conv2d(yi, fuse_weight, strides=[1,1,1,1], padding='SAME')
+            yi = tf.nn.conv2d(input=yi, filters=fuse_weight, strides=[1,1,1,1], padding='SAME')
             yi = tf.reshape(yi, [1, fs[2], fs[1], bs[2], bs[1]])
-            yi = tf.transpose(yi, [0, 2, 1, 4, 3])
+            yi = tf.transpose(a=yi, perm=[0, 2, 1, 4, 3])
         yi = tf.reshape(yi, [1, fs[1], fs[2], bs[1]*bs[2]])
 
         # softmax to match
@@ -301,7 +301,7 @@ def contextual_attention(f, b, mask=None, ksize=3, stride=1, rate=1,
         yi = tf.nn.softmax(yi*scale, 3)
         yi *=  mm  # mask
 
-        offset = tf.argmax(yi, axis=3, output_type=tf.int32)
+        offset = tf.argmax(input=yi, axis=3, output_type=tf.int32)
         offset = tf.stack([offset // fs[2], offset % fs[2]], axis=-1)
         # deconv for patch pasting
         # 3.1 paste center
@@ -353,7 +353,7 @@ def test_contextual_attention(args):
     f = np.expand_dims(f, 0)
     logger.info('Size of imageB: {}'.format(f.shape))
 
-    with tf.Session() as sess:
+    with tf.compat.v1.Session() as sess:
         bt = tf.constant(b, dtype=tf.float32)
         ft = tf.constant(f, dtype=tf.float32)
 

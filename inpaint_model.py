@@ -122,7 +122,7 @@ class InpaintCAModel(Model):
         return x_stage1, x_stage2, offset_flow
 
     def build_wgan_local_discriminator(self, x, reuse=False, training=True):
-        with tf.variable_scope('discriminator_local', reuse=reuse):
+        with tf.compat.v1.variable_scope('discriminator_local', reuse=reuse):
             cnum = 32 # default 64
             x = dis_conv(x, cnum, name='conv1', training=training)
             x = dis_conv(x, cnum*2, name='conv2', training=training)
@@ -132,7 +132,7 @@ class InpaintCAModel(Model):
             return x
 
     def build_wgan_global_discriminator(self, x, reuse=False, training=True):
-        with tf.variable_scope('discriminator_global', reuse=reuse):
+        with tf.compat.v1.variable_scope('discriminator_global', reuse=reuse):
             cnum = 32 # default 64
             x = dis_conv(x, cnum, name='conv1', training=training)
             x = dis_conv(x, cnum*2, name='conv2', training=training)
@@ -143,13 +143,13 @@ class InpaintCAModel(Model):
 
     def build_wgan_discriminator(self, batch_local, batch_global,
                                  reuse=False, training=True):
-        with tf.variable_scope('discriminator', reuse=reuse):
+        with tf.compat.v1.variable_scope('discriminator', reuse=reuse):
             dlocal = self.build_wgan_local_discriminator(
                 batch_local, reuse=reuse, training=training)
             dglobal = self.build_wgan_global_discriminator(
                 batch_global, reuse=reuse, training=training)
-            dout_local = tf.layers.dense(dlocal, 1, name='dout_local_fc')
-            dout_global = tf.layers.dense(dglobal, 1, name='dout_global_fc')
+            dout_local = tf.compat.v1.layers.dense(dlocal, 1, name='dout_local_fc')
+            dout_global = tf.compat.v1.layers.dense(dglobal, 1, name='dout_global_fc')
             return dout_local, dout_global
 
     def build_graph_with_losses(self, batch_data, config, training=True,
@@ -180,13 +180,13 @@ class InpaintCAModel(Model):
         local_patch_batch_complete = local_patch(batch_complete, bbox)
         local_patch_mask = local_patch(mask, bbox)
         l1_alpha = config.COARSE_L1_ALPHA
-        losses['l1_loss'] = l1_alpha * tf.reduce_mean(tf.abs(local_patch_batch_pos - local_patch_x1)*spatial_discounting_mask(config))
+        losses['l1_loss'] = l1_alpha * tf.reduce_mean(input_tensor=tf.abs(local_patch_batch_pos - local_patch_x1)*spatial_discounting_mask(config))
         if not config.PRETRAIN_COARSE_NETWORK:
-            losses['l1_loss'] += tf.reduce_mean(tf.abs(local_patch_batch_pos - local_patch_x2)*spatial_discounting_mask(config))
-        losses['ae_loss'] = l1_alpha * tf.reduce_mean(tf.abs(batch_pos - x1) * (1.-mask))
+            losses['l1_loss'] += tf.reduce_mean(input_tensor=tf.abs(local_patch_batch_pos - local_patch_x2)*spatial_discounting_mask(config))
+        losses['ae_loss'] = l1_alpha * tf.reduce_mean(input_tensor=tf.abs(batch_pos - x1) * (1.-mask))
         if not config.PRETRAIN_COARSE_NETWORK:
-            losses['ae_loss'] += tf.reduce_mean(tf.abs(batch_pos - x2) * (1.-mask))
-        losses['ae_loss'] /= tf.reduce_mean(1.-mask)
+            losses['ae_loss'] += tf.reduce_mean(input_tensor=tf.abs(batch_pos - x2) * (1.-mask))
+        losses['ae_loss'] /= tf.reduce_mean(input_tensor=1.-mask)
         if summary:
             scalar_summary('losses/l1_loss', losses['l1_loss'])
             scalar_summary('losses/ae_loss', losses['ae_loss'])
@@ -194,7 +194,7 @@ class InpaintCAModel(Model):
             if offset_flow is not None:
                 viz_img.append(
                     resize(offset_flow, scale=4,
-                           func=tf.image.resize_nearest_neighbor))
+                           func=tf.compat.v1.image.resize_nearest_neighbor))
             images_summary(
                 tf.concat(viz_img, axis=2),
                 'raw_incomplete_predicted_complete', config.VIZ_MAX_OUT)
@@ -255,10 +255,10 @@ class InpaintCAModel(Model):
         if config.AE_LOSS:
             losses['g_loss'] += config.AE_LOSS_ALPHA * losses['ae_loss']
             logger.info('Set AE_LOSS_ALPHA to %f' % config.AE_LOSS_ALPHA)
-        g_vars = tf.get_collection(
-            tf.GraphKeys.TRAINABLE_VARIABLES, 'inpaint_net')
-        d_vars = tf.get_collection(
-            tf.GraphKeys.TRAINABLE_VARIABLES, 'discriminator')
+        g_vars = tf.compat.v1.get_collection(
+            tf.compat.v1.GraphKeys.TRAINABLE_VARIABLES, 'inpaint_net')
+        d_vars = tf.compat.v1.get_collection(
+            tf.compat.v1.GraphKeys.TRAINABLE_VARIABLES, 'discriminator')
         return g_vars, d_vars, losses
 
     def build_infer_graph(self, batch_data, config, bbox=None, name='val'):
@@ -291,7 +291,7 @@ class InpaintCAModel(Model):
         if offset_flow is not None:
             viz_img.append(
                 resize(offset_flow, scale=4,
-                       func=tf.image.resize_nearest_neighbor))
+                       func=tf.compat.v1.image.resize_nearest_neighbor))
         images_summary(
             tf.concat(viz_img, axis=2),
             name+'_raw_incomplete_complete', config.VIZ_MAX_OUT)
