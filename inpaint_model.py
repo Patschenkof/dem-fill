@@ -7,7 +7,7 @@ import cv2
 import neuralgym as ng
 import tensorflow as tf
 from tf_slim import arg_scope
-
+ 
 # tensorflow.contrib.framework.python.ops
 
 from neuralgym.models import Model
@@ -47,7 +47,7 @@ class InpaintCAModel(Model):
 
         # two stage network
         cnum = 16 # default 32
-        with tf.variable_scope(name, reuse=reuse), \
+        with tf.compat.v1.variable_scope(name, reuse=reuse), \
                 arg_scope([gen_conv, gen_deconv],
                           training=training, padding=padding):
             # stage1
