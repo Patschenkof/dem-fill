@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     sess_config = tf.compat.v1.ConfigProto()
     sess_config.gpu_options.allow_growth = True
-    with tf.Session(config=sess_config) as sess:
+    with tf.compat.v1.Session(config=sess_config) as sess:
         input_image = tf.constant(input_image, dtype=tf.float32)
         output = model.build_server_graph(input_image)
 
