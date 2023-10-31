@@ -138,7 +138,7 @@ def bbox2mask(bbox, config, name='mask'):
         mask[:, bbox[0]+h:bbox[0]+bbox[2]-h,
              bbox[1]+w:bbox[1]+bbox[3]-w, :] = 1.
         return mask
-    with tf.variable_scope(name), tf.device('/cpu:0'):
+    with tf.compat.v1.variable_scope(name), tf.device('/cpu:0'):
         img_shape = config.IMG_SHAPES
         height = img_shape[0]
         width = img_shape[1]
@@ -460,7 +460,7 @@ def flow_to_image(flow):
 def flow_to_image_tf(flow, name='flow_to_image'):
     """Tensorflow ops for computing flow to image.
     """
-    with tf.variable_scope(name), tf.device('/cpu:0'):
+    with tf.compat.v1.variable_scope(name), tf.device('/cpu:0'):
         img = tf.py_func(flow_to_image, [flow], tf.float32, stateful=False)
         img.set_shape(flow.get_shape().as_list()[0:-1]+[3])
         img = img / 127.5 - 1.
@@ -488,7 +488,7 @@ def highlight_flow(flow):
 def highlight_flow_tf(flow, name='flow_to_image'):
     """Tensorflow ops for highlight flow.
     """
-    with tf.variable_scope(name), tf.device('/cpu:0'):
+    with tf.compat.v1.variable_scope(name), tf.device('/cpu:0'):
         img = tf.py_func(highlight_flow, [flow], tf.float32, stateful=False)
         img.set_shape(flow.get_shape().as_list()[0:-1]+[3])
         img = img / 127.5 - 1.
