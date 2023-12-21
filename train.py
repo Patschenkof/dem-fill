@@ -8,6 +8,13 @@ import neuralgym as ng
 
 from inpaint_model import InpaintCAModel
 
+dir = os.path.dirname(os.path.realpath('.'))
+relative_path = os.path.join('dem-fill')
+absolute_path = os.path.abspath(os.path.join(dir, relative_path))
+
+print(absolute_path)
+
+
 
 logger = logging.getLogger()
 
@@ -27,10 +34,10 @@ def multigpu_graph_def(model, data, config, gpu_id=0, loss_type='g'):
         return losses['d_loss']
     else:
         raise ValueError('loss type is not supported.')
-
+    
 
 if __name__ == "__main__":
-    config = ng.Config(r'inpaint.yml')
+    config = ng.Config(os.path.join(absolute_path,'inpaint.yml'))
     if config.GPU_ID != -1:
         ng.set_gpus(config.GPU_ID)
     else:
