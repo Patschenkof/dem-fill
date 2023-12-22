@@ -9,10 +9,9 @@ import neuralgym as ng
 from inpaint_model import InpaintCAModel
 
 dir = os.path.dirname(os.path.realpath('.'))
-relative_path = os.path.join('dem-fill')
+relative_path = os.path.join('Masterarbeit','dem-fill')
 absolute_path = os.path.abspath(os.path.join(dir, relative_path))
 
-print(absolute_path)
 
 
 
