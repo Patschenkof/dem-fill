@@ -159,7 +159,7 @@ class InpaintCAModel(Model):
         # generate mask, 1 represents masked point
         bbox = random_bbox(config)
         mask = bbox2mask(bbox, config, name='mask_c')
-        batch_incomplete = batch_pos*(1.-mask)
+        batch_incomplete = batch_pos*(1.-mask) # Uses mask on nomralized image
         x1, x2, offset_flow = self.build_inpaint_net(
             batch_incomplete, mask, config, reuse=reuse, training=training,
             padding=config.PADDING)
